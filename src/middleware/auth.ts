@@ -25,28 +25,30 @@ export const authc = (req: Request,res: Response,next: NextFunction) => {
     }
 };
 
-export const authorize = (req: Request,res: Response,next: NextFunction) => {
-    const token = req.cookies?.token;
-
-    if (!token) {
-        return res.status(401).json({msg: "No token provided"});
-    }
-
-    try {
-        const verify = jwt.verify(
-            token,
-            process.env.JWT_SECRET as string
-        ) as {
-            userId: string;
-            role: UserRole;
-        };
-
-        if (verify.role !== "lister") {
-            return res.status(403).json({msg: "Access denied"});
+export const authorize = (...roles: UserRole[]) => {
+    return (req: Request,res: Response,next: NextFunction) => {
+        const token = req.cookies?.token;
+    
+        if (!token) {
+            return res.status(401).json({msg: "No token provided"});
         }
-
-        next();
-    } catch {
-        return res.status(401).json({msg: "Invalid token"});
-    }
+    
+        try {
+            const verify = jwt.verify(
+                token,
+                process.env.JWT_SECRET as string
+            ) as {
+                userId: string;
+                role: UserRole;
+            };
+    
+            if (!roles.includes(verify.role)) {
+                return res.status(403).json({msg: "Access denied"});
+            }
+    
+            next();
+        } catch {
+            return res.status(401).json({msg: "Invalid token"});
+        }
+    };
 };
