@@ -18,7 +18,7 @@ router.get("/:id",authc, getListingById);
 router.post(
     "/",
     authc,
-    authz("Lister"),
+    authz("lister"),
     validateListing,
     createListing
 );
@@ -26,7 +26,7 @@ router.post(
 router.put(
     "/:id",
     authc,
-    authz("Lister"),
+    authz("lister"),
     validateListing,
     updateListing
 );
@@ -34,7 +34,7 @@ router.put(
 router.delete(
     "/:id",
     authc,
-    authz("Lister"),
+    authz("lister"),
     deleteListing
 );
 
