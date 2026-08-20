@@ -12,7 +12,7 @@ declare global {
 }
 
 // 1) Authintication (Auth guard)
-const authc = (req: Request, res: Response, next: NextFunction) => {
+export const authc = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -45,7 +45,7 @@ const authc = (req: Request, res: Response, next: NextFunction) => {
 };
 
 // 2) Authorization (Role guard)
-const authz = (role: String) => {
+export const authz = (role: String) => {
   const middleware = (req: Request, res: Response, next: NextFunction) => {
     if (req.user?.role !== role) {
       return res.status(403).json({ msg: "Access denied" });
