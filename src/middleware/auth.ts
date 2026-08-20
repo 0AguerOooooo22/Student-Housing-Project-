@@ -2,7 +2,14 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import type { UserRole } from "../models/User";
 
-export const authc = (req: Request,res: Response,next: NextFunction) => {
+export interface AuthRequest extends Request {
+    user?: {
+        userId: string;
+        role: UserRole;
+    };
+}
+
+export const authc = (req: AuthRequest,res: Response,next: NextFunction) => {
     const token = req.cookies?.token;
 
     if (!token) {
@@ -13,12 +20,16 @@ export const authc = (req: Request,res: Response,next: NextFunction) => {
         const verify = jwt.verify(
             token,
             process.env.JWT_SECRET as string
-        );
+        )as {
+            userId: string;
+            role: UserRole;
+        };
 
         if (!verify) {
             return res.status(401).json({msg: "Invalid token"});
         }
-
+        
+        req.user = verify;
         next();
     } catch {
         return res.status(401).json({msg: "Invalid token"});
@@ -26,29 +37,20 @@ export const authc = (req: Request,res: Response,next: NextFunction) => {
 };
 
 export const authorize = (...roles: UserRole[]) => {
-    return (req: Request,res: Response,next: NextFunction) => {
-        const token = req.cookies?.token;
-    
-        if (!token) {
-            return res.status(401).json({msg: "No token provided"});
+    return (req: AuthRequest,res: Response,next: NextFunction) => {
+
+       if (!req.user) {
+            res.status(401).json({
+                msg: "Authentication required"
+            });
+            return;
         }
     
-        try {
-            const verify = jwt.verify(
-                token,
-                process.env.JWT_SECRET as string
-            ) as {
-                userId: string;
-                role: UserRole;
-            };
-    
-            if (!roles.includes(verify.role)) {
-                return res.status(403).json({msg: "Access denied"});
-            }
-    
-            next();
-        } catch {
-            return res.status(401).json({msg: "Invalid token"});
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({msg: "Access denied"});
         }
+    
+        next();
+
     };
 };
