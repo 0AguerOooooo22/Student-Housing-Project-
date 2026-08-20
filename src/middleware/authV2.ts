@@ -36,7 +36,7 @@ export const authc = (req: AuthRequest,res: Response,next: NextFunction) => {
     }
 };
 
-export const authorize = (...roles: UserRole[]) => {
+export const authz = (...roles: UserRole[]) => {
     return (req: AuthRequest,res: Response,next: NextFunction) => {
 
        if (!req.user) {
