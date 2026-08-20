@@ -5,7 +5,7 @@ import { AuthRequest } from "../middleware/authV2";
 
 export const getListings = async (req: Request,res: Response): Promise<void> => {
     try {
-        const { location, minPrice, maxPrice, roomsAvailable } = req.query;
+        const { location, minPrice, maxPrice, roomsAvailable,isAvailable } = req.query;
 
         const filter: Record<string, unknown> = {};
 
@@ -32,6 +32,10 @@ export const getListings = async (req: Request,res: Response): Promise<void> => 
 
         if (roomsAvailable !== undefined) {
             filter.roomsAvailable = { $gte: Number(roomsAvailable) };
+        }
+        
+        if (isAvailable !== undefined) {
+            filter.isAvailable = isAvailable === "true";
         }
 
         const listings = await Listing.find(filter).populate(
