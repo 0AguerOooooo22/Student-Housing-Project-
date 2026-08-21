@@ -42,7 +42,7 @@ router.post("/register", register);
  *             $ref: '#/components/schemas/LoginRequest'
  *     responses:
  *       200:
- *         description: Login successful. Authentication token is stored in a cookie.
+ *         description: Login successful. Returns a JWT authentication token.
  *       401:
  *         description: Invalid email or password
  *       500:
