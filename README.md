@@ -14,6 +14,16 @@ The system supports:
 - Interest request management
 - Swagger API documentation
 
+## Live Demo
+
+The API is deployed and live on Railway:
+
+🔗 **https://student-housing-project-production.up.railway.app**
+
+Interactive Swagger documentation:
+
+🔗 **https://student-housing-project-production.up.railway.app/api-docs**
+
 ## Stack
 
 - Node.js
