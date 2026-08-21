@@ -139,16 +139,6 @@ router.get(
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/UpdateRequestStatus'
- *             type: object
- *             required:
- *               - status
- *             properties:
- *               status:
- *                 type: string
- *                 enum:
- *                   - accepted
- *                   - declined
- *                 example: accepted
  *     responses:
  *       200:
  *         description: Request status updated successfully
