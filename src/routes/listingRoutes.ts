@@ -6,8 +6,8 @@ import {
     updateListing,
     deleteListing
 } from "../Controllers/listingController";
-import { authc, authz } from "../middleware/auth";
-import { validateListing } from "../middleware/listingValidations";
+import { authc, authz } from "../middleware/AuthMiddleware";
+import { validateListing } from "../middleware/listingValidation";
 
 const router = Router();
 
