@@ -261,11 +261,6 @@ Possible future improvements include:
 - Notifications
 - Additional automated tests
 
-## Author
-
-**Youssef Wael**
-Computer Science Student
-
 ## License
 
 This project was developed for educational and backend training purposes.
