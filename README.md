@@ -243,6 +243,12 @@ When running locally:
 http://localhost:3000/api-docs
 ```
 
+When running live (Railway):
+
+```
+https://student-housing-project-production.up.railway.app/api-docs
+```
+
 The Swagger documentation provides an interactive interface for testing the API endpoints.
 
 ## Project Structure
