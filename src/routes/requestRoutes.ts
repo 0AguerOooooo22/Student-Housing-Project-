@@ -5,8 +5,8 @@ import {
     getListingRequests,
     updateRequestStatus,
     cancelMyRequest
-} from "../controllers/requestController";
-import { authc, authz } from "../middleware/auth";
+} from "../Controllers/requestController";
+import { authc, authz } from "../middleware/AuthMiddleware";
 
 const router = Router();
 
