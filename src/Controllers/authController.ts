@@ -23,7 +23,6 @@ export const register = async (req: Request,res: Response): Promise<void> => {
             role
         });
 
-        const token = generateToken(user._id, user.role);
 
         res.status(201).json({
             message: "User registered successfully.",
